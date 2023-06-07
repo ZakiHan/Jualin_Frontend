@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './Navbar';
+
 const Checkout = () => {
   const [cartItems, setCartItems] = useState([
     {
@@ -28,10 +29,38 @@ const Checkout = () => {
   const [totalPrice, setTotalPrice] = useState(0);
 
   useEffect(() => {
-    // Calculate the total price based on the quantity and price of each item
+    const calculateTotalPrice = () => {
+      // Fetch the real price information from the server
+      // Replace this code with your actual API or database call
+      const fetchPricesFromServer = async () => {
+        try {
+          const response = await fetch('https://api.example.com/prices');
+          const data = await response.json();
+
+          // Map the fetched prices to the cart items
+          const updatedCartItems = cartItems.map((item) => {
+            const priceData = data.find((priceItem) => priceItem.id === item.id);
+            const price = priceData ? priceData.price : item.price;
+            return { ...item, price };
+          });
+
+          setCartItems(updatedCartItems);
+        } catch (error) {
+          console.error('Error fetching prices:', error);
+        }
+      };
+
+      fetchPricesFromServer();
+    };
+
+    calculateTotalPrice();
+  }, []); // Empty dependency array to only run once on component mount
+
+  useEffect(() => {
     const calculateTotalPrice = () => {
       const total = cartItems.reduce(
-        (accumulator, item) => accumulator + (parseFloat(item.price.replace(/[^0-9.-]+/g, '')) * item.quantity),
+        (accumulator, item) =>
+          accumulator + parseFloat(item.price.replace(/[^0-9.-]+/g, '')) * item.quantity,
         0
       );
       setTotalPrice(total);
@@ -58,7 +87,7 @@ const Checkout = () => {
 
   return (
     <div>
-      <Navbar />
+      <Navbar username="JohnDoe" email="johndoe@example.com" balance={100000} />
 
       <div className="container mx-auto my-8">
         <h1 className="text-3xl font-bold mb-4">Checkout</h1>
@@ -68,11 +97,7 @@ const Checkout = () => {
           {cartItems.map((item) => (
             <div key={item.id} className="flex items-center mb-6">
               <div className="mr-4">
-                <img
-                  className="w-32 h-32 rounded-md"
-                  src={item.imageUrl}
-                  alt="Product"
-                />
+                <img className="w-32 h-32 rounded-md" src={item.imageUrl} alt="Product" />
               </div>
               <div>
                 <h3 className="text-lg font-bold">{item.name}</h3>
