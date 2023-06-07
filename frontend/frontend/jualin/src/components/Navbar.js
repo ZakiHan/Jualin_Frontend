@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const Navbar = () => {
+const Navbar = ({ username, email, balance }) => {
   const [activeItem, setActiveItem] = useState('');
 
   const handleItemClick = (item) => {
@@ -86,20 +86,21 @@ const Navbar = () => {
           </div>
           <div className="text-white">
             <span className="font-bold text-lg" style={{ fontFamily: 'Jost Bold' }}>
-              Username
+              {username}
             </span>
             <span className="text-gray-300 ml-2"></span>
             <br />
             <span className="font-bold text-lg" style={{ fontFamily: 'Jost Bold' }}>
-              Email
+              {email}
             </span>
             <span className="text-gray-300 ml-2"></span>
             <br />
             <span className="font-bold text-lg" style={{ fontFamily: 'Jost Bold' }}>
-              Balance
+              Balance: {balance.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
             </span>
             <span className="text-gray-300 ml-2"></span>
           </div>
+
         </div>
       </div>
     </nav>

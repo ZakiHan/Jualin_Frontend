@@ -4,11 +4,12 @@ import "./App.css"
 import LoginPage from './components/LoginPage';
 import Home from './components/Home';
 import Checkout from './components/Checkout';
+import AccountPage from './components/AccountPage';
 
 export default function App() {
   return (
     <div>
-      <Checkout/>
+      <AccountPage/>
     </div>
   );
 }
