@@ -15,14 +15,17 @@ const Navbar = ({ username, email, balance }) => {
   };
 
   const handleProfileClick = () => {
-    window.location.href = '/History';
+    window.location.href = '/Account';
   };
+
   const handleCategoryClick = () => {
     window.location.href = '/Category';
   };
+
   const handleCheckOutClick = () => {
     window.location.href = '/Checkout';
   };
+
   const handleHistoryClick = () => {
     window.location.href = '/History';
   };
@@ -59,12 +62,14 @@ const Navbar = ({ username, email, balance }) => {
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <div className="flex items-center">
-            <img
-              className="w-12 h-12 rounded-full"
-              src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
-              alt="Profile"
-            />
+          <div className="flex items-center" onClick={handleProfileClick}>
+            <Link to="/Account">
+              <img
+                className="w-12 h-12 rounded-full"
+                src="https://static.vecteezy.com/system/resources/thumbnails/002/318/271/small/user-profile-icon-free-vector.jpg"
+                alt="Profile"
+              />
+            </Link>
           </div>
           <div className="text-white">
             <span className="font-bold text-lg" style={{ fontFamily: 'Jost Bold' }}>
@@ -78,7 +83,7 @@ const Navbar = ({ username, email, balance }) => {
             <span className="text-gray-300 ml-2"></span>
             <br />
             <span className="font-bold text-lg" style={{ fontFamily: 'Jost Bold' }}>
-              Balance: {balance}
+              Rp{balance}
             </span>
             <span className="text-gray-300 ml-2"></span>
           </div>
