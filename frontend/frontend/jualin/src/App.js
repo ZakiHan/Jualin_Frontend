@@ -1,24 +1,18 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import React from 'react';
+import Navbar from './components/Navbar';
+import "./App.css"
 import LoginPage from './components/LoginPage';
-import RegisterPage from './components/RegisterPage';
 import Home from './components/Home';
 import Checkout from './components/Checkout';
 import AccountPage from './components/AccountPage';
 import HistoryPage from './components/HistoryPage';
-import Navbar from './components/Navbar';
+import RegisterPage from './components/RegisterPage';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import CategoryPage from './components/CategoryPage';
 import ItemDetails from './components/ItemDetails';
 import AddItem from './components/AddItem';
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false); // State to track login status
-
-  const handleLogin = () => {
-    // Logic to handle successful login
-    setLoggedIn(true);
-  };
-
   const displayItems = [
     {
       id: 1,
@@ -45,7 +39,6 @@ export default function App() {
       description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
     },
   ];
-
   const item = {
     id: 1,
     name: 'Example Item',
@@ -55,36 +48,20 @@ export default function App() {
     image: null,
     category: 'Electronics',
   };
-
   return (
     <Router>
-      {loggedIn && <Navbar username="JohnDoe" email="johndoe@example.com" balance={100000} />}
+      <Navbar username="JohnDoe" email="johndoe@example.com" balance={100000} />
       <Routes>
-        {loggedIn ? (
-          // If logged in, display the routes
-          <>
-            <Route path="/Home" element={<Home items={displayItems} />} />
-            <Route path="/Checkout" element={<Checkout />} />
-            <Route path="/Account" element={<AccountPage />} />
-            <Route path="/History" element={<HistoryPage />} />
-            <Route path="/Category" element={<CategoryPage />} />
-            <Route path="/ItemDetails/:id" element={<ItemDetails item={item} />} />
-            <Route path="/AddItem" element={<AddItem />} />
-            <Navigate to="/Home" replace /> {/* Redirect to home page */}
-          </>
-        ) : (
-          // If not logged in, display the login and register pages
-          <>
-            <Route
-              path="/"
-              element={<LoginPage onLogin={handleLogin} />}
-            />
-            <Route
-              path="/Register"
-              element={<RegisterPage onLogin={handleLogin} />}
-            />
-          </>
-        )}
+        <Route path="/Home" element={<Home items={displayItems} />} />
+        <Route path="/Checkout" element={<Checkout />} />
+        <Route path="/Account" element={<AccountPage />} />
+        <Route path="/History" element={<HistoryPage />} />
+        <Route path="/LoginPage" element={<LoginPage />} />
+        <Route path="/RegisterPage" element={<RegisterPage />} />
+        <Route path="/Category" element={<CategoryPage />} />
+        <Route path="/ItemDetails/:id" element={<ItemDetails item={item} />} />
+        <Route path="/" element={<Home items={displayItems} />} />
+        <Route path="/AddItem" element={<AddItem />} />
       </Routes>
     </Router>
   );
